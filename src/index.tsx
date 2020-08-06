@@ -2,15 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.less';
 import App from './App';
-import {configure} from 'mobx';
-import { Provider,useStaticRendering } from 'mobx-react';
+import { configure } from 'mobx';
+import { Provider, useStaticRendering } from 'mobx-react';
 import stores from './mobx/index';  //注入数据仓库
 // useStaticRendering(true); //只能通过action进行更改
-configure({enforceActions: "always"}); //开启强制使用action进行更改
+configure({ enforceActions: "always" }); //开启强制使用action进行更改
 ReactDOM.render(
-  <Provider {...stores}> 
+  <Provider {...stores}>
     <App />
-  </Provider>,
+  </Provider>
+  ,
   document.getElementById('root')
 );
 

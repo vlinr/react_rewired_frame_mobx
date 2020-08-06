@@ -3,9 +3,8 @@
 react<br />
 react-dom<br />
 react-app-rewired<br />
-redux<br />
-react-redux<br />
-redux-saga<br />
+mobx<br />
+mobx-react<br />
 react-router<br />
 less<br />
 antd<br />
