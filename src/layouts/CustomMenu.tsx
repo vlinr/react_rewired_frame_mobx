@@ -26,6 +26,8 @@ const findRouter = (findList: Array<RouteItemType>, path: string): Array<string>
             let item: RouteItemType = findList[i];
             result.push(item.path);
         }
+    else
+        result.push(path);
     return result;
 }
 
@@ -63,6 +65,7 @@ interface MenuPrposType {
 }
 //去掉最后一个/
 const formatPath = (path: string): string => {
+    if(path === '/')return path;
     let reg = new RegExp('/' + "$");
     if (path.length > 0 && reg.test(path)) {
         return path.substring(0, path.length - 1);
@@ -107,9 +110,11 @@ const CustomMenu = forwardRef(({ collapsed, setParentCollapsed }: MenuPrposType,
     }, [collapsed])
     //使用forwardRef，接收ref，第二个参数，函数组件默认不允许直接使用ref，因此外部传递过来，在内部进行赋值
     // ref.current = form
+
     ref.current = {
     }
     ref.current.toggle = toggle;  //把这个函数暴露出去
+
     //子元素设置父元素选中得key
     const setOpenKeys: Function = useCallback((openKeys: Array<string>) => {
         setOpenItemkeys(openKeys);
@@ -138,13 +143,15 @@ const CustomMenu = forwardRef(({ collapsed, setParentCollapsed }: MenuPrposType,
         setSelectItem(item);
     }, [])
 
+    const subMenuClick = useCallback((key:string,hasComponet:boolean)=>hasComponet && history.push(key),[]);
+
     //渲染菜单栏
     const childMap: Function = useCallback(
         (data: RouteItemType) => {
             if (!data?.hideItem && ((data?.authority || [])?.indexOf(USER_AUTHORITY) > -1 || (data?.authority || []).length === 0)) {
                 const Icon: any = data?.icon || null;
                 if ((data?.children || [])?.length != 0) {
-                    return <Menu.SubMenu key={`${data.path}`} title={data.name} icon={Icon && <Icon /> || null}>
+                    return <Menu.SubMenu key={`${data.path}`} title={data.name} onTitleClick={({key})=>subMenuClick(key,data.component?true:false)} icon={Icon && <Icon /> || null}>
                         {
                             data?.children?.map((child: RouteItemType) => childMap(child))
                         }

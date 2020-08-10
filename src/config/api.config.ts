@@ -5,3 +5,4 @@ export const GET_HOME_DATA_URL:string = '';
 
 export const LOGIN_URL:string = '/api/login';
 export const GET_CONTENT_URL:string = '/api/content';
+export const UPLOAD_FILR_API:string = '';

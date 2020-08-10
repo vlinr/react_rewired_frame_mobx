@@ -2,8 +2,7 @@
 import * as React from 'react';
 import { Form, Input, Upload, Button, Radio, message, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import 'braft-editor/dist/index.css'
-import BraftEditor from 'braft-editor';
+import CustomBraftEditor from '../CustomBraftEditor';
 const { useState, memo, useCallback,useEffect } = React;
 const { Option } = Select;
 const { Item } = Form;
@@ -70,7 +69,7 @@ function CustomForm({ onSubmit ,content}: PropsType): React.ReactElement<any> {
     const [exfiles, setExFiles] = useState(content?.experienceTypeInput);
 
     const [selectHref, setSelectHref] = useState(true);
-
+    const [editorState,setEditorState] = useState(null);
     const [form] = Form.useForm();
 
     useEffect(()=>{
@@ -159,11 +158,8 @@ function CustomForm({ onSubmit ,content}: PropsType): React.ReactElement<any> {
                 <Radio value={1}>否</Radio>
             </Radio.Group>
         </Item>
-        <Item name={['content']} label="内容" rules={[{ required: true, message: "请输入内容" }]} initialValue={BraftEditor.createEditorState(content?.content)}>
-            <BraftEditor
-                placeholder="请输入具体内容"
-                style={{ border: '1px solid #d9d9d9' }}
-            />
+        <Item name={['content']} label="内容" rules={[{ required: true, message: "请输入内容" }]}>
+            <CustomBraftEditor editorState={editorState} setEditorState={setEditorState} defaultValue='' />
         </Item>
         <Item wrapperCol={{ span: 24 }} style={{ textAlign: "center", marginTop: 50 }}>
             <Button htmlType="submit" type="primary" size="large" style={{ width: 200 }}>保存</Button>

@@ -83,7 +83,7 @@ const ROUTER_CONFIG: Array<RouteItemType> = [
     {
         path: '/',  //访问路径
         layout: BackLayout, //布局，最外层的必须指定
-        // component: Content, //组件,作为父级没有组件，子集才有
+        component: Content, //组件,作为父级没有组件，子集才有
         name: '内容管理', //名称
         isNewWindow: false,  //是否是新窗口打开
         icon: ProfileOutlined,
